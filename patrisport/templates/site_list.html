@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="text-center mb-4">Liste des Sites Sportifs</h1>
+
+<div class="row">
+    {% for site in sites %}
+        <div class="card col-3 d-flex flex-column align-items-center justify-content-center gap-1 p-3">
+            {% if site.url_image %}
+                <p><img src="{{ site.url_image }}" alt="{{ site.appellation }}" class="img-fluid" style="aspect-ratio: 1 / 1"></p>
+            {% endif %}
+            <p>{{ site.appellation }}</p>
+            {% comment %} <a href="{% url 'article_detail' article.pk %}" class="show-btn">Voir plus</a> {% endcomment %}
+            <a href="" class="show-btn">Voir plus</a>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

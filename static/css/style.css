@@ -1,0 +1,20 @@
+h1 {
+    color: #1d6ca4;
+}
+
+.tag {
+    padding: 3px 10px 5px;
+    color: #1d6ca4;
+    border: 1px solid #1d6ca4;
+    border-radius: 50px;
+    background-color: #d8eefd;
+    text-decoration: none;
+}
+
+.show-btn {
+    text-decoration: none;
+    padding: 5px 15px;
+    color: #fff;
+    background-color: #1d6ca4;
+    border-radius: 5px;
+}
