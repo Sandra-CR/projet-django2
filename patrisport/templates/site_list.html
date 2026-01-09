@@ -2,19 +2,68 @@
 
 {% block content %}
 
-<h1 class="text-center mb-4">Liste des Sites Sportifs</h1>
+<h1 class="text-center mt-4">Liste des Sites Sportifs</h1>
 
-<div class="row">
+{% if query %}
+    {% if page_obj.paginator.count %}
+        <p class="text-center text-muted">{{ page_obj.paginator.count }} résulat{{ page_obj.paginator.count|pluralize }} pour "{{ query }}"</p>
+    {% else %}
+        <p class="text-center text-muted">Aucun résulat pour "{{ query }}"</p>
+    {% endif %}
+{% endif %}
+
+<div class="row g-4 mt-4">
     {% for site in sites %}
-        <div class="card col-3 d-flex flex-column align-items-center justify-content-center gap-1 p-3">
-            {% if site.url_image %}
-                <p><img src="{{ site.url_image }}" alt="{{ site.appellation }}" class="img-fluid" style="aspect-ratio: 1 / 1"></p>
-            {% endif %}
-            <p>{{ site.appellation }}</p>
-            {% comment %} <a href="{% url 'article_detail' article.pk %}" class="show-btn">Voir plus</a> {% endcomment %}
-            <a href="" class="show-btn">Voir plus</a>
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 d-flex flex-column">
+                {% if site.url_image %}
+                    <img src="{{ site.url_image }}" alt="{{ site.appellation }}" class="img-fluid">
+                {% endif %}
+                <div class="d-flex flex-column p-2 mt-1 h-100">
+                    <h6 class="fw-semibold mb-1">{{ site.appellation }}</h6>
+                    <p class="mb-3" style="color: #a4a4a4; font-size: 15px;">{{ site.commune }} ({{ site.departement }})</p>
+                    <a href="" class="show-btn">Voir plus</a>
+                </div>
+            </div>
         </div>
     {% endfor %}
 </div>
+
+{% if is_paginated %}
+<div class="d-flex align-items-center justify-content-between mt-4">
+    <div class="fw-semibold">
+        {{ page_obj.paginator.count }} sites - Page {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+    </div>
+    <ul class="pagination mb-0">
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?{% if query %}q={{ query|urlencode }}&{% endif %}page={{ page_obj.previous_page_number }}" aria-label="Précédent">
+                    &laquo;
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">&laquo;</span>
+            </li>
+        {% endif %}
+
+        <li class="page-item active">
+            <span class="page-link">{{ page_obj.number }}</span>
+        </li>
+
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?{% if query %}q={{ query|urlencode }}&{% endif %}page={{ page_obj.next_page_number }}" aria-label="Suivant">
+                    &raquo;
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">&raquo;</span>
+            </li>
+        {% endif %}
+    </ul>
+</div>
+{% endif %}
 
 {% endblock %}
